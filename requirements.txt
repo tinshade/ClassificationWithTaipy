@@ -1,0 +1,4 @@
+taipy
+tensorflow
+pillow
+numpy
