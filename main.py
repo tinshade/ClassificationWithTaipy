@@ -3,7 +3,7 @@ from tensorflow.keras import models
 from PIL import Image
 import numpy as np
 
-model = models.load_model("starterFiles/baseline_mariya.keras")
+model = models.load_model("assets/baseline.keras")
 
 
 class_names = {
@@ -34,19 +34,18 @@ def predict_image(model, path_to_image):
 
     # Tricking model into thinking it is looking at an array of sample images and not a single image
     probability = model.predict(np.array([data])[:1])
-    print(probability)
     probes = probability.max()
     prediction = class_names[np.argmax(probability)]
     return (probes, prediction)
 
 
-image_path = "starterFiles/placeholder_image.png"
+image_path = "assets/placeholder_image.png"
 prediction, prob, content = "", "", ""
 
 
 image_control_component = """
 <|text-center|
-<|{"starterFiles//logo.png"}|image|width=25vw|>
+<|{"assets/logo.png"}|image|width=10vw|height=25vh|>
 
 <|{content}|file_selector|extensions=.png|>
 
@@ -68,7 +67,6 @@ index = image_control_component
 
 
 def on_change(state, variable_name, variable_value):
-    print(state, variable_name, variable_value)
     if variable_name == "content":
         state.image_path = variable_value
         probes, prediction = predict_image(model, variable_value)
